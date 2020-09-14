@@ -1,12 +1,8 @@
 # EuclidSyncNano
 Euclidean sequencer implemented on an Arduino Nano
-Inspiration from various sources, see e.g. 
-https://louridas.github.io/rwa/assignments/musical-rhythms/
-https://medium.com/code-music-noise/euclidean-rhythms-391d879494df
+Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/, https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
-Euclidean rhythms are essentially a way of spacing out n events (‘onsets’) across m positions (essentially, pulses or beats) as evenly possible
-For simplicity, we are assuming quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver.
-To generate a sequence, Bresenham’s line algorithm is used, which is normaly used for drawing a line in a raster graphics environment.
+Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. To generate a sequence, Bresenham’s line algorithm is used, which is normaly used for drawing a line in a raster graphics environment.
 
 In this example, 5 channels are implemented, mapped to 5 digital output pins. Each channel output can be connected to a percussion synthesizer input.
 For each channel, a sequence is generated based on the number of beats or pulses (n) in the sequence, the number of onsets (k), and the offset of the pattern (o). These  parameters are set by then user with 3 rotary encoders (KY-40).
