@@ -3,7 +3,7 @@
 #include "EuclidRhythm.h"
 #include "KY040.h"
 //
-// todo: plus/minus button to change duration of current step on channel
+// todo: plus/minus button to change duration of current position on channel
 //  attach interrupt to external clock pin, and override master clk
 //
 
@@ -35,7 +35,7 @@ SIGNAL(TIMER0_COMPA_vect)
 
   // perform output gate logic
   for (int ch = 0; ch < nr_of_channels; ch++)
-    // check if there is still time remaining in the current hit
+    // check if there is still time remaining in the current onset
     if (rhythm[ch].dec_rem_time())
       digitalWrite(rhythm[ch].get_pin(), HIGH);
     else
@@ -50,7 +50,7 @@ SIGNAL(TIMER0_COMPA_vect)
     for (int ch = 0; ch < nr_of_channels; ch++)
     {
       rhythm[ch].set_rem_time(100 * rhythm[ch].get_duration());
-      rhythm[ch].inc_step();
+      rhythm[ch].inc_position();
     }
     tick_count = 0; // reset counter
   }
@@ -108,8 +108,8 @@ void loop()
     delay(10); // wait a bit for bounce to settle
     chan = (nr_of_channels * analogRead(ROT)) / 1024;
     encoder[0].set_value(rhythm[chan].get_offset());
-    encoder[1].set_value(rhythm[chan].get_hits());
-    encoder[2].set_value(rhythm[chan].get_steps());
+    encoder[1].set_value(rhythm[chan].get_onsets());
+    encoder[2].set_value(rhythm[chan].get_positions());
     // Serial.println(chan);
   }
 
@@ -117,9 +117,9 @@ void loop()
   if (encoder[0].read() || encoder[1].read() || encoder[2].read())
   // adapt rhythm parameters
   {
-    rhythm[chan].set_steps(encoder[2].get_value()); // change nr of steps in rhythm
+    rhythm[chan].set_positions(encoder[2].get_value()); // change nr of positions in rhythm
     encoder[1].set_max_value(encoder[2].get_value());
-    rhythm[chan].set_hits(encoder[1].get_value());    // change nr of hits in rhythm
+    rhythm[chan].set_onsets(encoder[1].get_value());    // change nr of onsets in rhythm
     rhythm[chan].set_offset(-encoder[0].get_value()); // change pattern offset
     rhythm[chan].compute_sequence();                  // generate sequence
 

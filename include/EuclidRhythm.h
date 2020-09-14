@@ -3,30 +3,30 @@
 class EuclidRhythm
 {
 private:
-    uint8_t max_steps = 0;        // max nr of steps in sequence
-    uint8_t my_steps = 0;         // nr of steps in sequence
-    uint8_t my_step = 0;          // current step in sequence
-    uint8_t my_hits = 0;          // nr of hits in sequence
+    uint8_t max_positions = 0;    // max nr of positions in sequence
+    uint8_t my_positions = 0;     // nr of positions in sequence
+    uint8_t my_position = 0;      // current position in sequence
+    uint8_t my_onsets = 0;        // nr of onsets in sequence
     uint8_t my_offset = 0;        // sequence offset
     uint8_t my_pin;               // output pin
-    int duration = 0;             // hit duration [ms]
+    int duration = 0;             // onset duration [ms]
     int *sequence;
-    int rem_time = 0;             // remaining time [ms] before hit is turned off
+    int rem_time = 0;             // remaining time [ms] before onset is turned off
 
 public:
     EuclidRhythm(){};
-    EuclidRhythm(uint8_t nr_of_steps, uint8_t pin);
+    EuclidRhythm(uint8_t nr_of_positions, uint8_t pin);
     ~EuclidRhythm();
-    bool set_steps(uint8_t steps);
-    bool set_hits(uint8_t hits);
+    bool set_positions(uint8_t positions);
+    bool set_onsets(uint8_t onsets);
     bool set_offset(uint8_t offset);
-    uint8_t get_steps();
-    uint8_t get_hits();
+    uint8_t get_positions();
+    uint8_t get_onsets();
     uint8_t get_offset();
     void clear_sequence();
     bool compute_sequence();
     String print_sequence();
-    void inc_step();
+    void inc_position();
     int get_duration();
     void set_duration(int value);
     uint8_t get_pin();
