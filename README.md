@@ -1,5 +1,5 @@
 # EuclidSeqNano
-Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/, https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
+Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
 Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. To generate a sequence, Bresenham’s line algorithm is applied, which is normaly used for drawing a line in a raster graphics environment.
 
