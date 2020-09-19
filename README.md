@@ -58,4 +58,4 @@ SIGNAL(TIMER0_COMPA_vect)
   }
 }
 ```
-![Image of Yaktocat](https://github.com/ducroq/EuclidSeqNano/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
+![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
