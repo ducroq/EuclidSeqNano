@@ -4,6 +4,13 @@ Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sou
 Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
 <audio src="https://github.com/ducroq/EuclidSeqNano/blob/master/example/hinnik.mp3" controls preload></audio>
 [examples](https://github.com/ducroq/EuclidSeqNano/blob/master/example/hinnik.mp3)
+click <audio id="ID004" source src="004.mp3"></audio><button onclick="playAudio('ID004')" type="button">play4</button> and then <audio id="ID003" source src="003.mp3"></audio><button onclick="playAudio('ID003')" type="button">play3</button>
+<script>
+function playAudio(audio_element) {
+	var x = document.getElementById(audio_element);
+	x.play();
+}
+</script>
 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
