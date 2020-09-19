@@ -6,10 +6,10 @@ Euclidean rhythms are essentially a way of spacing out n events (onsets) across 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
 EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
-                                       EuclidRhythm(nr_of_beats *tpqn, A1),
-                                       EuclidRhythm(nr_of_beats *tpqn, A2),
-                                       EuclidRhythm(nr_of_beats *tpqn, A3),
-                                       EuclidRhythm(nr_of_beats *tpqn, A4)};
+                                       EuclidRhythm(nr_of_beats * tpqn, A1),
+                                       EuclidRhythm(nr_of_beats * tpqn, A2),
+                                       EuclidRhythm(nr_of_beats * tpqn, A3),
+                                       EuclidRhythm(nr_of_beats * tpqn, A4)};
 ```
 For each channel, a sequence is generated based on the number of beats or pulses (n) in the sequence, the number of onsets (k), and the offset of the pattern (o). 
 These  parameters are set by user with 3 rotary encoders (KY-40), and a sequence is only recomputed if one of the rotary encoders changes. To generate a sequence, Bresenham’s line algorithm is implemented, which is normaly used for drawing a line in a raster graphics environment.
@@ -37,7 +37,7 @@ SIGNAL(TIMER0_COMPA_vect)
 
   // perform output gate logic
   for (int ch = 0; ch < nr_of_channels; ch++)
-    // check if there is still time remaining in the current onset
+    // check if current event (onset) is still active
     if (rhythm[ch].dec_rem_time())
       digitalWrite(rhythm[ch].get_pin(), HIGH);
     else
@@ -58,4 +58,4 @@ SIGNAL(TIMER0_COMPA_vect)
   }
 }
 ```
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](https://github.com/ducroq/EuclidSeqNano/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
