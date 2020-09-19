@@ -2,6 +2,7 @@
 Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
 Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
+<audio src="audio.mp3" controls preload></audio>
 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
@@ -60,5 +61,7 @@ SIGNAL(TIMER0_COMPA_vect)
 The general loop is used to check all the knobs and change the rhythm objects' parameters accordingly. If one of the rhythm parameters is changed, also a JSON document is generated and serialized for further saving/displaying settings on a host computer.
 
 
-The circuit can be wired in different ways
+The circuit can for example be wired like this
 ![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
+
+
