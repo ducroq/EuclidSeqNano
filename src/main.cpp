@@ -21,10 +21,10 @@ const int max_tempo = 250; // [bpm]
 
 // global variables, also used by timer interrupt vector
 EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
-                                       EuclidRhythm(nr_of_beats *tpqn, A1),
-                                       EuclidRhythm(nr_of_beats *tpqn, A2),
-                                       EuclidRhythm(nr_of_beats *tpqn, A3),
-                                       EuclidRhythm(nr_of_beats *tpqn, A4)};
+                                       EuclidRhythm(nr_of_beats * tpqn, A1),
+                                       EuclidRhythm(nr_of_beats * tpqn, A2),
+                                       EuclidRhythm(nr_of_beats * tpqn, A3),
+                                       EuclidRhythm(nr_of_beats * tpqn, A4)};
 float tick_period_ms;
 
 // timer 0 interrupt vector is called once per millisecond
@@ -35,7 +35,7 @@ SIGNAL(TIMER0_COMPA_vect)
 
   // perform output gate logic
   for (int ch = 0; ch < nr_of_channels; ch++)
-    // check if there is still time remaining in the current onset
+    // check if current event (onset) is still active
     if (rhythm[ch].dec_rem_time())
       digitalWrite(rhythm[ch].get_pin(), HIGH);
     else
