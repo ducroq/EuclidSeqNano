@@ -2,7 +2,8 @@
 Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
 Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
-<audio src="audio.mp3" controls preload></audio>
+
+[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/example/hinnik.mp3)
 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
@@ -27,6 +28,7 @@ int val2 = (nr_of_channels * analogRead(ROT)) / 1024;
 ```
 A potmeter regulates the overall tempo (bpm) of the sequences between a minimal and a maximum tempo.
 Alternatively, user can connect an external clock signal providing a pulse (quarter notes) to lock on to (not yet implemented).
+- [ ] Implement external clock synchronization
 
 Within a 1 ms timer interrupt service routine, the rhythm objects are parsed to check if a sequence channel outputs should be activated.
 ```
@@ -64,4 +66,5 @@ The general loop is used to check all the knobs and change the rhythm objects' p
 The circuit can for example be wired like this
 ![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
 
-
+Some pictures of a realization
+....
