@@ -3,7 +3,7 @@ Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sou
 
 Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
 
-[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/example/)
+[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
@@ -15,8 +15,9 @@ EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
 ```
 The ```EuclidRhythm``` object contains a rhythm, it's parameters, as well as getters and setters. To generate a sequence a seperate method must be called. A sequence is generated based on the number of beats or pulses (n) in the sequence, the number of onsets (k), and the offset of the pattern (o). 
 These  parameters are set by user with 3 rotary encoders (KY-40), and a sequence is only recomputed if one of the rotary encoders changes. 
+A front plate could look this:
 
-![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
+![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
 
 To generate a sequence, Bresenham’s line algorithm is implemented, which is normaly used for drawing a line in a raster graphics environment.
 ```
@@ -68,8 +69,10 @@ The general loop is used to check all the knobs and change the rhythm objects' p
 
 
 The circuit can for example be wired like this
+
 ![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_20-01-37.png)
 
 And a realization
+
 ![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/back.JPG)
 
