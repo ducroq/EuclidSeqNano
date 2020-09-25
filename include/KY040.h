@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 // https://github.com/brianlow/Rotary/
+//  or https://github.com/enjoyneering/
 // maybe this approach is better?
 
 class KY040
