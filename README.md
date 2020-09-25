@@ -5,6 +5,10 @@ Euclidean rhythms are essentially a way of spacing out n events (onsets) across 
 
 [Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
 
+A front plate could look this:
+
+![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
+
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
 EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
@@ -15,9 +19,7 @@ EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
 ```
 The ```EuclidRhythm``` object contains a rhythm, it's parameters, as well as getters and setters. To generate a sequence a seperate method must be called. A sequence is generated based on the number of beats or pulses (n) in the sequence, the number of onsets (k), and the offset of the pattern (o). 
 These  parameters are set by user with 3 rotary encoders (KY-40), and a sequence is only recomputed if one of the rotary encoders changes. 
-A front plate could look this:
 
-![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
 
 To generate a sequence, Bresenham’s line algorithm is implemented, which is normaly used for drawing a line in a raster graphics environment.
 ```
@@ -74,5 +76,5 @@ The circuit can for example be wired like this
 
 And a realization
 
-![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/back.JPG)
+![Hardware](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/back.JPG)
 
