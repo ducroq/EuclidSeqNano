@@ -5,13 +5,13 @@ Euclidean rhythms are essentially a way of spacing out n events (onsets) across 
 
 [Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
 
-E.g. 3 against 2 polyrhythm:
-| x _ x _ x _ |
-| x _ _ x _ _ |
+E.g. 3 against 2 polyrhythm:  
+| x _ x _ x _ |  
+| x _ _ x _ _ |  
 
-Or 3 against 4 polyrhythm:
-| x _ _ x _ _ x _ _ x _ _ |
-| x _ _ _ x _ _ _ x _ _ _ |
+Or 3 against 4 polyrhythm:  
+| x _ _ x _ _ x _ _ x _ _ |  
+| x _ _ _ x _ _ _ x _ _ _ |  
 
 A sequencer front plate could look this:
 
