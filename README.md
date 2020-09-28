@@ -1,9 +1,22 @@
 # EuclidSeqNano
-Euclidean sequencer implemented on an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
+Euclidean sequencer implemented with an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
-Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
+Euclidean rhythms E(n,m) are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1).   
 
-[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/example/hinnik.mp3)
+E.g. a simple 2-beat E(1,2) against a 3-beat E(1,3) polyrhythm:  
+| x _ x _ x _ |  
+| x _ _ x _ _ |  
+
+Or a simple 3-beat E(1,3) against a 4-beat E(1,4) polyrhythm:  
+| x _ _ x _ _ x _ _ x _ _ |  
+| x _ _ _ x _ _ _ x _ _ _ |  
+
+[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
+
+The goal is to build some hardware that produces a number of Euclidean rhythms. That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
+A sequencer front plate could look this:
+
+![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
 
 In this example, `nr_of_channels = 5` channels are implemented, mapped to 5 output pins of an Arduino Nano. Each channel output can be connected to a percussion synthesizer input.
 ```
@@ -14,7 +27,10 @@ EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
                                        EuclidRhythm(nr_of_beats * tpqn, A4)};
 ```
 The ```EuclidRhythm``` object contains a rhythm, it's parameters, as well as getters and setters. To generate a sequence a seperate method must be called. A sequence is generated based on the number of beats or pulses (n) in the sequence, the number of onsets (k), and the offset of the pattern (o). 
-These  parameters are set by user with 3 rotary encoders (KY-40), and a sequence is only recomputed if one of the rotary encoders changes. To generate a sequence, Bresenham’s line algorithm is implemented, which is normaly used for drawing a line in a raster graphics environment.
+These  parameters are set by user with 3 rotary encoders (KY-40), and a sequence is only recomputed if one of the rotary encoders changes. 
+
+
+To generate a sequence, Bresenham’s line algorithm is implemented, which is normaly used for drawing a line in a raster graphics environment.
 ```
 rhythm[chan].set_positions(encoder[2].get_value()); // change nr of positions in rhythm
 encoder[1].set_max_value(encoder[2].get_value());
@@ -64,7 +80,10 @@ The general loop is used to check all the knobs and change the rhythm objects' p
 
 
 The circuit can for example be wired like this
-![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_19-43-43.png)
 
-Some pictures of a realization
-....
+![Schematic](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/Schematic_EuclidSeqNano_2020-09-19_20-01-37.png)
+
+And a realization
+
+![Hardware](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/back.JPG)
+
