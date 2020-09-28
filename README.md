@@ -1,18 +1,19 @@
 # EuclidSeqNano
 Euclidean sequencer implemented with an Arduino Nano. Inspiration from various sources, see e.g. https://louridas.github.io/rwa/assignments/musical-rhythms/ and  https://medium.com/code-music-noise/euclidean-rhythms-391d879494df.
 
-Euclidean rhythms are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1). That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
+Euclidean rhythms E(n,m) are essentially a way of spacing out n events (onsets) across m positions (pulses or beats) as evenly possible. For simplicity, we are assuming a meter with quarter notes with 4 ticks per quarter note (tpqn), so 1 onset is 1/16th of a bar or semi-quaver. We get some interesting polyrhythms if we simultaneously play multiple Euclidean rhythms with a number of beats in the rhythms that are relatively prime (they share no common positive divisors except 1).   
 
-[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
-
-E.g. 3 against 2 polyrhythm:  
+E.g. a simple 2-beat E(1,2) against a 3-beat E(1,3) polyrhythm:  
 | x _ x _ x _ |  
 | x _ _ x _ _ |  
 
-Or 3 against 4 polyrhythm:  
+Or a simple 3-beat E(1,3) against a 4-beat E(1,4) polyrhythm:  
 | x _ _ x _ _ x _ _ x _ _ |  
 | x _ _ _ x _ _ _ x _ _ _ |  
 
+[Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
+
+That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
 A sequencer front plate could look this:
 
 ![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
