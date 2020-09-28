@@ -9,7 +9,7 @@ private:
     uint8_t my_onsets = 0;        // nr of onsets in sequence
     uint8_t my_offset = 0;        // sequence offset
     uint8_t my_pin;               // output pin
-    int duration = 0;             // onset duration [ms]
+    int duration = 10;            // onset duration [ms]
     int *sequence;
     int rem_time = 0;             // remaining time [ms] before onset is turned off
 
@@ -30,7 +30,7 @@ public:
     int get_duration();
     void set_duration(int value);
     uint8_t get_pin();
-    void set_rem_time(int time);
+    void set_rem_time();//int time);
     int get_rem_time();
     bool dec_rem_time();
 };

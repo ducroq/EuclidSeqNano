@@ -141,15 +141,16 @@ void EuclidRhythm::inc_position()
 }
 
 int EuclidRhythm::get_duration()
-// return duration of onset [ms] at current position
+// return duration of onset [ms]
 {
-	return sequence[my_position];
+	return duration;
 }
 
 void EuclidRhythm::set_duration(int value)
-// set duration of onset [ms] at current position
+// set duration of onset [ms]
 {
-	sequence[my_position] = value;
+	if ((value >= 0) && (value <= 1000))
+		duration = value;
 }
 
 uint8_t EuclidRhythm::get_pin()
@@ -157,9 +158,10 @@ uint8_t EuclidRhythm::get_pin()
 	return my_pin;
 }
 
-void EuclidRhythm::set_rem_time(int time)
+void EuclidRhythm::set_rem_time()
+// set remaining time [ms] of current event
 {
-	rem_time = time;
+	rem_time = sequence[my_position]*duration;
 }
 
 int EuclidRhythm::get_rem_time()
@@ -168,6 +170,7 @@ int EuclidRhythm::get_rem_time()
 }
 
 bool EuclidRhythm::dec_rem_time()
+// decrease remaining time [ms] and return boolean to indicate if event is still active
 {
 	rem_time--;
 	return (rem_time > 0);

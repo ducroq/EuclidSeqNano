@@ -8,38 +8,34 @@
 //
 
 // some pin defines, rest is below
-#define CLK A5 // external clock analog input
-#define POT A6 // potentiometer analog input
-#define ROT A7 // rotary switch analog input
+#define CLK A5  // external clock analog input
+#define POT A6  // potentiometer analog input
+#define ROT A7  // rotary switch analog input
+#define BUT1 2  // general purpose push button
+#define BUT2 3  // general purpose push button
+#define BUT3 13 // general purpose push button
 
 // constants
 const int nr_of_channels = 5;
-const int nr_of_beats = 4; // 4/4 measure, assuming quarter notes
-const int tpqn = 4;        // ticks per quarter note (tpqn), so 1 tick is 1/16th of a bar or Semi Quaver.
-const int min_tempo = 10;  // [bpm]
-const int max_tempo = 250; // [bpm]
+const int nr_of_beats = 4;     // 4/4 measure, assuming quarter notes
+const int tpqn = 4;            // ticks per quarter note (tpqn), so 1 tick is 1/16th of a bar or Semi Quaver.
+const int min_tempo = 10;      // [bpm]
+const int max_tempo = 250;     // [bpm]
+const int debounceDelay = 100; // the debounce time[ms]
 
 // global variables, also used by timer interrupt vector
 EuclidRhythm rhythm[nr_of_channels] = {EuclidRhythm(nr_of_beats * tpqn, A0),
-                                       EuclidRhythm(nr_of_beats * tpqn, A1),
-                                       EuclidRhythm(nr_of_beats * tpqn, A2),
-                                       EuclidRhythm(nr_of_beats * tpqn, A3),
-                                       EuclidRhythm(nr_of_beats * tpqn, A4)};
+                                       EuclidRhythm(nr_of_beats *tpqn, A1),
+                                       EuclidRhythm(nr_of_beats *tpqn, A2),
+                                       EuclidRhythm(nr_of_beats *tpqn, A3),
+                                       EuclidRhythm(nr_of_beats *tpqn, A4)};
 float tick_period_ms;
 
 // timer 0 interrupt vector is called once per millisecond
 SIGNAL(TIMER0_COMPA_vect)
 {
   static int tick_count = 0; // save for tick counting
-  tick_count++; // proceed
-
-  // perform output gate logic
-  for (int ch = 0; ch < nr_of_channels; ch++)
-    // check if current event (onset) is still active
-    if (rhythm[ch].dec_rem_time())
-      digitalWrite(rhythm[ch].get_pin(), HIGH);
-    else
-      digitalWrite(rhythm[ch].get_pin(), LOW);
+  tick_count++;              // proceed
 
   // lock to tick
   if (tick_count >= tick_period_ms)
@@ -49,11 +45,19 @@ SIGNAL(TIMER0_COMPA_vect)
     // schedule outputs
     for (int ch = 0; ch < nr_of_channels; ch++)
     {
-      rhythm[ch].set_rem_time(100 * rhythm[ch].get_duration());
+      rhythm[ch].set_rem_time();
       rhythm[ch].inc_position();
     }
     tick_count = 0; // reset counter
   }
+
+  // perform output gate logic
+  for (int ch = 0; ch < nr_of_channels; ch++)
+    // check if current event (onset) is still active
+    if (rhythm[ch].dec_rem_time())
+      digitalWrite(rhythm[ch].get_pin(), HIGH);
+    else
+      digitalWrite(rhythm[ch].get_pin(), LOW);
 }
 
 void setup()
@@ -73,6 +77,11 @@ void setup()
   // in the middle and call the Compare A vector
   OCR0A = 0xAF;
   TIMSK0 |= _BV(OCIE0A);
+
+  // pull-ups for pushbuttons
+  pinMode(BUT1, INPUT_PULLUP);
+  pinMode(BUT2, INPUT_PULLUP);
+  pinMode(BUT3, INPUT_PULLUP);
 
   // We'll send Json over serial to show settings
   Serial.begin(115200);
@@ -105,12 +114,26 @@ void loop()
   if (chan != val2)
   // reload encoder settings
   {
-    delay(10); // wait a bit for bounce to settle
+    delay(debounceDelay); // wait a bit for bounce to settle
     chan = (nr_of_channels * analogRead(ROT)) / 1024;
     encoder[0].set_value(rhythm[chan].get_offset());
     encoder[1].set_value(rhythm[chan].get_onsets());
     encoder[2].set_value(rhythm[chan].get_positions());
     // Serial.println(chan);
+  }
+
+  // check pushbuttons
+  if (digitalRead(BUT1))
+  {
+    delay(debounceDelay); // wait a bit for bounce to settle
+    if (digitalRead(BUT1))
+      rhythm[chan].set_duration(rhythm[chan].get_duration() + 10);
+  }
+  if (digitalRead(BUT2))
+  {
+    delay(debounceDelay); // wait a bit for bounce to settle
+    if (digitalRead(BUT2))
+      rhythm[chan].set_duration(rhythm[chan].get_duration() - 10);
   }
 
   // check rotary encoders
@@ -119,7 +142,7 @@ void loop()
   {
     rhythm[chan].set_positions(encoder[2].get_value()); // change nr of positions in rhythm
     encoder[1].set_max_value(encoder[2].get_value());
-    rhythm[chan].set_onsets(encoder[1].get_value());    // change nr of onsets in rhythm
+    rhythm[chan].set_onsets(encoder[1].get_value());  // change nr of onsets in rhythm
     rhythm[chan].set_offset(-encoder[0].get_value()); // change pattern offset
     rhythm[chan].compute_sequence();                  // generate sequence
 
@@ -131,6 +154,7 @@ void loop()
     {
       JsonObject nested1 = doc.createNestedObject("channel " + String(ch));
       nested1["sequence"] = rhythm[ch].print_sequence();
+      nested1["duration"] = rhythm[ch].get_duration();
     }
     serializeJson(doc, Serial);
     Serial.println();
