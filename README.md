@@ -13,7 +13,7 @@ Or a simple 3-beat E(1,3) against a 4-beat E(1,4) polyrhythm:
 
 [Listen to examples](https://github.com/ducroq/EuclidSeqNano/blob/master/examples/)
 
-That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
+The goal is to build some hardware that produces a number of Euclidean rhythms. That's where the EuclidSeqNano sequencer comes in. With just a couple of knobs, the user can build polyrhythmic sequences that can be fed to a modular synthesizer.
 A sequencer front plate could look this:
 
 ![Front plate](https://github.com/ducroq/EuclidSeqNano/blob/master/circuit/front.JPG)
