@@ -51,15 +51,7 @@ Within a 1 ms timer interrupt service routine, the rhythm objects are parsed to 
 SIGNAL(TIMER0_COMPA_vect)
 {
   static int tick_count = 0; // save for tick counting
-  tick_count++; // proceed
-
-  // perform output gate logic
-  for (int ch = 0; ch < nr_of_channels; ch++)
-    // check if current event (onset) is still active
-    if (rhythm[ch].dec_rem_time())
-      digitalWrite(rhythm[ch].get_pin(), HIGH);
-    else
-      digitalWrite(rhythm[ch].get_pin(), LOW);
+  tick_count++;              // proceed
 
   // lock to tick
   if (tick_count >= tick_period_ms)
@@ -69,11 +61,19 @@ SIGNAL(TIMER0_COMPA_vect)
     // schedule outputs
     for (int ch = 0; ch < nr_of_channels; ch++)
     {
-      rhythm[ch].set_rem_time(100 * rhythm[ch].get_duration());
+      rhythm[ch].set_rem_time();
       rhythm[ch].inc_position();
     }
     tick_count = 0; // reset counter
   }
+
+  // perform output gate logic
+  for (int ch = 0; ch < nr_of_channels; ch++)
+    // check if current event (onset) is still active
+    if (rhythm[ch].dec_rem_time())
+      digitalWrite(rhythm[ch].get_pin(), HIGH);
+    else
+      digitalWrite(rhythm[ch].get_pin(), LOW);
 }
 ```
 The general loop is used to check all the knobs and change the rhythm objects' parameters accordingly. If one of the rhythm parameters is changed, also a JSON document is generated and serialized for further saving/displaying settings on a host computer.
